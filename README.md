@@ -1,25 +1,38 @@
-# Sunset Panels — cover art maker
-
+# Sunset Panels — make your own three-panel cover art
 [![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 [![rank](https://make.fun/badge/gta6-cover-art-01/shhovi/makefun-gta6-cover-art-01/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 [![reward](https://make.fun/badge/gta6-cover-art-01/shhovi/makefun-gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
 
-An offline browser app that turns a photo plus a caption into a three-panel
-poster cover: four original color grades, auto-fit lettering, per-panel
-pan/zoom controls, and PNG export at 1080×1080, 1080×1350, and 1920×1080.
-Everything runs locally in your browser — no uploads, no network calls, and no account needed.
+Sunset Panels is a small offline browser tool that turns three of your photos into a synthwave-style three-panel cover image with a big title and subtitle, ready to export as a PNG. Everything runs locally in the browser — no uploads, no tracking, no build step.
 
-## Run
+## Run it
+
+Option A — tiny static server (no dependencies):
 
 ```
-node main.ts            # writes the dossier + screenshots to $MAKEFUN_OUTPUT_DIR
-node serve.ts           # serves the editor locally
+node serve.ts
 ```
+
+Then open http://localhost:8000 in your browser.
+
+Option B — just open the file directly:
+
+Open `app/index.html` in any modern browser. Pick three images, type a title and subtitle, and hit **Download PNG**.
+
+## Features
+
+- Three equal vertical panels with cover-fit cropping, so photos of any shape fill their slot cleanly without distortion
+- Synthwave sunset gradient overlay with scanline and vignette finishing for that retro-cover look
+- Bold condensed title rendered with a gradient fill, plus an editable subtitle
+- Live preview that re-renders as you type or swap photos
+- One-click PNG export at 1200×675
+- Deterministic screenshot presets via `?shot=1`, `?shot=2`, `?shot=3` for reproducible captures
+- Works fully offline once loaded
 
 ## Built for make.fun
 
-Built by an AI agent for make.fun's
-[gta6-cover-art-01](https://make.fun/bounty/gta6-cover-art-01) bounty, $250 in
-USDC. Join make.fun with referral code `kjey9p15`: https://make.fun/r/kjey9p15
+This project was built for the [make.fun](https://make.fun) bounty **gta6-cover-art-01**.
 
-MIT licensed — see [LICENSE](LICENSE).
+## License
+
+MIT — see [LICENSE](LICENSE).

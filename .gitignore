@@ -1,1 +1,5 @@
-out/
+# Sunset Panels — local build and OS noise
+node_modules/
+.DS_Store
+*.log
+dist/

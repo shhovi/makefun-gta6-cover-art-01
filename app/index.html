@@ -1,62 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sunset Panels — Cover Art Maker</title>
-<link rel="stylesheet" href="./style.css">
+<title>Sunset Panels</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app">
-  <aside class="controls">
-    <h1>Sunset Panels</h1>
-    <p class="tagline">A photo and a caption become a three-panel poster cover — all on your machine, never uploaded.</p>
-
-    <label class="field">
-      <span>Main photo</span>
-      <input id="photo" type="file" accept="image/*">
-    </label>
-    <div class="row">
-      <button type="button" data-sample="pier">Sample: Pier</button>
-      <button type="button" data-sample="boulevard">Sample: Boulevard</button>
+<header>
+  <h1>Sunset Panels</h1>
+  <p>Turn three photos into a synthwave three-panel cover — everything stays in your browser, nothing is uploaded.</p>
+</header>
+<main>
+  <section class="panels">
+    <div class="panel" data-panel="0">
+      <label for="file-0">Panel 1</label>
+      <input id="file-0" type="file" accept="image/*">
+      <div class="preview" id="preview-0"><span>No image yet</span></div>
     </div>
-    <label class="field">
-      <span>Second photo (small panels, optional)</span>
-      <input id="photo2" type="file" accept="image/*">
-    </label>
-
-    <label class="field">
-      <span>Caption</span>
-      <input id="caption" type="text" maxlength="40" value="Sunset Heist">
-    </label>
-
-    <div class="field">
-      <span>Colour grade</span>
-      <div id="grades" class="row wrap"></div>
+    <div class="panel" data-panel="1">
+      <label for="file-1">Panel 2</label>
+      <input id="file-1" type="file" accept="image/*">
+      <div class="preview" id="preview-1"><span>No image yet</span></div>
     </div>
-
-    <div class="field">
-      <span>Panel to adjust</span>
-      <div id="panels" class="row wrap"></div>
+    <div class="panel" data-panel="2">
+      <label for="file-2">Panel 3</label>
+      <input id="file-2" type="file" accept="image/*">
+      <div class="preview" id="preview-2"><span>No image yet</span></div>
     </div>
-    <label class="field">
-      <span>Zoom</span>
-      <input id="zoom" type="range" min="1" max="3" step="0.01" value="1">
-    </label>
-    <p class="hint">Drag the preview to pan. Click a panel to select it.</p>
-
-    <label class="field">
-      <span>Export size</span>
-      <select id="size"></select>
-    </label>
-    <button id="export" type="button" class="primary">Export PNG</button>
-    <p id="status" role="status"></p>
-  </aside>
-
-  <section class="stage">
-    <canvas id="preview" width="1080" height="1080" aria-label="Cover preview"></canvas>
+  </section>
+  <section class="controls">
+    <label for="title-input">Title</label>
+    <input id="title-input" type="text" placeholder="SUNSET PANELS" value="SUNSET PANELS" maxlength="40">
+    <label for="subtitle-input">Subtitle</label>
+    <input id="subtitle-input" type="text" placeholder="a synthwave story" maxlength="60">
+    <button id="download-btn" type="button">Download PNG</button>
+  </section>
+  <section class="output">
+    <canvas id="cover-canvas" width="1200" height="675" hidden></canvas>
+    <img id="rendered" alt="Rendered cover preview">
   </section>
 </main>
-<script type="module" src="./src/main.js"></script>
+<footer><small>Sunset Panels — built for make.fun gta6-cover-art-01 · MIT licensed</small></footer>
+<script type="module" src="src/main.js"></script>
 </body>
 </html>
