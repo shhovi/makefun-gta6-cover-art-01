@@ -7,7 +7,7 @@
 An offline browser app that turns a photo plus a caption into a three-panel
 poster cover: four original color grades, auto-fit lettering, per-panel
 pan/zoom controls, and PNG export at 1080×1080, 1080×1350, and 1920×1080.
-Everything runs locally — no uploads, no network calls.
+Everything runs locally in your browser — no uploads, no network calls, and no account needed.
 
 ## Run
 
