@@ -3,56 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Sunset Panels — offline 3-panel cover art maker. Photo + caption → PNG cover.">
-<title>Sunset Panels — 3-Panel Cover Maker</title>
+<title>Sunset Panels — Cover Maker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <h1>Sunset Panels</h1>
-  <p class="tagline">Offline 3-panel cover art maker — photo + caption → PNG cover.</p>
+<header>
+<h1>Sunset Panels</h1>
+<p class="tagline">Build a three-panel sunset cover, right in your browser — no uploads needed.</p>
 </header>
-<main class="layout">
-  <section class="controls">
-    <label class="field">
-      <span>Photo</span>
-      <input id="photoInput" type="file" accept="image/*">
-    </label>
-    <div class="samples">
-      <span class="field-label">Samples</span>
-      <div class="row">
-        <button id="sampleBoulevard" type="button">Boulevard</button>
-        <button id="samplePier" type="button">Pier</button>
-      </div>
-    </div>
-    <div class="panels">
-      <span class="field-label">Panels (click a slot, then pick a photo or sample)</span>
-      <div class="panel-slots">
-        <button class="panel-slot active" id="slot0" type="button">Panel 1</button>
-        <button class="panel-slot" id="slot1" type="button">Panel 2</button>
-        <button class="panel-slot" id="slot2" type="button">Panel 3</button>
-      </div>
-    </div>
-    <label class="field">
-      <span>Title</span>
-      <input id="titleInput" type="text" value="SUNSET PANELS" maxlength="32">
-    </label>
-    <label class="field">
-      <span>Grade</span>
-      <select id="gradeSelect">
-        <option value="sunset" selected>Sunset</option>
-        <option value="neon">Neon</option>
-      </select>
-    </label>
-    <div class="presets">
-      <span class="field-label">Presets</span>
-      <div class="row" id="presetRow"></div>
-    </div>
-    <button id="exportBtn" class="export" type="button">Export PNG</button>
-  </section>
-  <section class="preview">
-    <canvas id="previewCanvas" width="1280" height="960"></canvas>
-  </section>
+<main>
+<canvas id="cover" width="1200" height="800"></canvas>
+<section class="controls">
+<div class="row">
+<label>Panel 1
+<select id="panel1">
+<option value="boulevard">Boulevard</option>
+<option value="pier">Pier</option>
+</select>
+</label>
+<label>Panel 2
+<select id="panel2">
+<option value="boulevard">Boulevard</option>
+<option value="pier" selected>Pier</option>
+</select>
+</label>
+<label>Panel 3
+<select id="panel3">
+<option value="boulevard">Boulevard</option>
+<option value="pier">Pier</option>
+</select>
+</label>
+</div>
+<div class="row">
+<label class="title-label">Title
+<input id="title" type="text" value="SUNSET PANELS" maxlength="24">
+</label>
+</div>
+<div class="row presets">
+<span>Presets:</span>
+<button type="button" data-shot="1">Shot 1</button>
+<button type="button" data-shot="2">Shot 2</button>
+<button type="button" data-shot="3">Shot 3</button>
+</div>
+<div class="row">
+<button id="download" type="button">Download JPEG</button>
+</div>
+<p class="note">Works fully offline — no uploads, no tracking, all artwork is generated locally.</p>
+</section>
 </main>
 <script type="module" src="src/main.js"></script>
 </body>
