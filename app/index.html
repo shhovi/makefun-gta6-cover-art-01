@@ -3,45 +3,57 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sunset Panels</title>
+<meta name="description" content="Sunset Panels — offline 3-panel cover art maker. Photo + caption → PNG cover.">
+<title>Sunset Panels — 3-Panel Cover Maker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
+<header class="topbar">
   <h1>Sunset Panels</h1>
-  <p>Turn three photos into a synthwave three-panel cover — everything stays in your browser, nothing is uploaded.</p>
+  <p class="tagline">Offline 3-panel cover art maker — photo + caption → PNG cover.</p>
 </header>
-<main>
-  <section class="panels">
-    <div class="panel" data-panel="0">
-      <label for="file-0">Panel 1</label>
-      <input id="file-0" type="file" accept="image/*">
-      <div class="preview" id="preview-0"><span>No image yet</span></div>
-    </div>
-    <div class="panel" data-panel="1">
-      <label for="file-1">Panel 2</label>
-      <input id="file-1" type="file" accept="image/*">
-      <div class="preview" id="preview-1"><span>No image yet</span></div>
-    </div>
-    <div class="panel" data-panel="2">
-      <label for="file-2">Panel 3</label>
-      <input id="file-2" type="file" accept="image/*">
-      <div class="preview" id="preview-2"><span>No image yet</span></div>
-    </div>
-  </section>
+<main class="layout">
   <section class="controls">
-    <label for="title-input">Title</label>
-    <input id="title-input" type="text" placeholder="SUNSET PANELS" value="SUNSET PANELS" maxlength="40">
-    <label for="subtitle-input">Subtitle</label>
-    <input id="subtitle-input" type="text" placeholder="a synthwave story" maxlength="60">
-    <button id="download-btn" type="button">Download PNG</button>
+    <label class="field">
+      <span>Photo</span>
+      <input id="photoInput" type="file" accept="image/*">
+    </label>
+    <div class="samples">
+      <span class="field-label">Samples</span>
+      <div class="row">
+        <button id="sampleBoulevard" type="button">Boulevard</button>
+        <button id="samplePier" type="button">Pier</button>
+      </div>
+    </div>
+    <div class="panels">
+      <span class="field-label">Panels (click a slot, then pick a photo or sample)</span>
+      <div class="panel-slots">
+        <button class="panel-slot active" id="slot0" type="button">Panel 1</button>
+        <button class="panel-slot" id="slot1" type="button">Panel 2</button>
+        <button class="panel-slot" id="slot2" type="button">Panel 3</button>
+      </div>
+    </div>
+    <label class="field">
+      <span>Title</span>
+      <input id="titleInput" type="text" value="SUNSET PANELS" maxlength="32">
+    </label>
+    <label class="field">
+      <span>Grade</span>
+      <select id="gradeSelect">
+        <option value="sunset" selected>Sunset</option>
+        <option value="neon">Neon</option>
+      </select>
+    </label>
+    <div class="presets">
+      <span class="field-label">Presets</span>
+      <div class="row" id="presetRow"></div>
+    </div>
+    <button id="exportBtn" class="export" type="button">Export PNG</button>
   </section>
-  <section class="output">
-    <canvas id="cover-canvas" width="1200" height="675" hidden></canvas>
-    <img id="rendered" alt="Rendered cover preview">
+  <section class="preview">
+    <canvas id="previewCanvas" width="1280" height="960"></canvas>
   </section>
 </main>
-<footer><small>Sunset Panels — built for make.fun gta6-cover-art-01 · MIT licensed</small></footer>
 <script type="module" src="src/main.js"></script>
 </body>
 </html>

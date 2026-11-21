@@ -1,65 +1,80 @@
-// main.js — wires the Sunset Panels UI (file inputs, title fields, download)
-// to the cover renderer in cover.js.
-import { loadImage, renderCover, downloadPng } from "./cover.js";
-import { initShots } from "./shots.js";
+import { drawCover } from './cover.js';
+import { PRESETS } from './shots.js';
 
-const canvas = document.getElementById("cover-canvas");
-const rendered = document.getElementById("rendered");
-const titleInput = document.getElementById("title-input");
-const subtitleInput = document.getElementById("subtitle-input");
-const downloadBtn = document.getElementById("download-btn");
+// Sunset Panels editor wiring: slots, samples, presets, PNG export.
 
-const images = [null, null, null];
+const canvas = document.getElementById('previewCanvas');
+const ctx = canvas.getContext('2d');
+const titleInput = document.getElementById('titleInput');
+const gradeSelect = document.getElementById('gradeSelect');
+const photoInput = document.getElementById('photoInput');
+const slotButtons = [0, 1, 2].map(i => document.getElementById('slot' + i));
 
-function refresh() {
-  renderCover(canvas, images, titleInput.value.trim(), subtitleInput.value.trim());
-  rendered.src = canvas.toDataURL("image/png");
+const panelImages = [null, null, null];
+const panelUrls = [null, null, null];
+let activeSlot = 0;
+
+function render() {
+  drawCover(ctx, panelImages, titleInput.value, gradeSelect.value, canvas.width, canvas.height);
 }
 
-function setPreview(index, img) {
-  const box = document.getElementById(`preview-${index}`);
-  box.innerHTML = "";
-  if (img) {
-    const el = document.createElement("img");
-    el.src = img.src;
-    el.alt = `Panel ${index + 1} preview`;
-    box.appendChild(el);
-  } else {
-    const span = document.createElement("span");
-    span.textContent = "No image yet";
-    box.appendChild(span);
-  }
+function setActiveSlot(i) {
+  activeSlot = i;
+  slotButtons.forEach((btn, j) => btn.classList.toggle('active', j === i));
 }
 
-async function loadIntoPanel(index, source) {
-  try {
-    const img = await loadImage(source);
-    images[index] = img;
-    setPreview(index, img);
-    refresh();
-  } catch {
-    images[index] = null;
-    setPreview(index, null);
-    refresh();
-  }
+function loadIntoSlot(url, slot) {
+  const img = new Image();
+  img.onload = () => {
+    panelImages[slot] = img;
+    panelUrls[slot] = url;
+    slotButtons[slot].style.backgroundImage = `url(${url})`;
+    slotButtons[slot].textContent = '';
+    render();
+  };
+  img.src = url;
 }
 
-for (let i = 0; i < 3; i++) {
-  const input = document.getElementById(`file-${i}`);
-  input.addEventListener("change", () => {
-    const file = input.files && input.files[0];
-    if (file) loadIntoPanel(i, file);
+slotButtons.forEach((btn, i) => btn.addEventListener('click', () => setActiveSlot(i)));
+
+photoInput.addEventListener('change', () => {
+  const file = photoInput.files && photoInput.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  loadIntoSlot(url, activeSlot);
+});
+
+document.getElementById('sampleBoulevard').addEventListener('click', () => loadIntoSlot('samples/boulevard.jpg', activeSlot));
+document.getElementById('samplePier').addEventListener('click', () => loadIntoSlot('samples/pier.jpg', activeSlot));
+
+titleInput.addEventListener('input', render);
+gradeSelect.addEventListener('change', render);
+
+const presetRow = document.getElementById('presetRow');
+PRESETS.forEach(preset => {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = preset.title;
+  btn.addEventListener('click', () => {
+    titleInput.value = preset.title;
+    preset.panels.forEach((panel, i) => loadIntoSlot(panel, i));
+    render();
   });
-}
+  presetRow.appendChild(btn);
+});
 
-titleInput.addEventListener("input", refresh);
-subtitleInput.addEventListener("input", refresh);
-downloadBtn.addEventListener("click", () => downloadPng(canvas, "cover.png"));
+document.getElementById('exportBtn').addEventListener('click', () => {
+  canvas.toBlob(blob => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sunset-panels-cover.png';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }, 'image/png');
+});
 
-// Preload the two bundled samples into panels 1 and 2.
-loadIntoPanel(0, "samples/boulevard.jpg");
-loadIntoPanel(1, "samples/pier.jpg");
-refresh();
-
-// Deterministic screenshot presets (?shot=1|2|3) — handled in shots.js.
-initShots({ canvas, rendered, titleInput, subtitleInput, loadIntoPanel, refresh });
+// Default panels from presets so the preview is never empty.
+PRESETS[0].panels.forEach((panel, i) => loadIntoSlot(panel, i));
+render();
